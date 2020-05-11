@@ -32,7 +32,7 @@ public class Main {
             // Create reader
             ArrayList<Shelf> shelves = new ArrayList<>();
             shelves.add(shelfImpl);
-            Reader reader = new Reader(0, "a", "a", "a", shelves);
+            Reader reader = new Reader(0, "Igor", "Kilbas", "anime", shelves);
 
             // Add reader
             libraryDB.addReader(reader);

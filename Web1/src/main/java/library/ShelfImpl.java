@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -70,18 +71,7 @@ public class ShelfImpl implements Serializable, Shelf {
 
     public void sort() {
         // Perform sorting and duplicate deletion via TreeSet
-        TreeSet<Book> sortedBooks = new TreeSet<>((o1, o2) -> {
-            if (o1.getCost() == o2.getCost() &&
-                    o1.getDate().equals(o2.getDate()) &&
-                    o1.getName().equals(o2.getName()) &&
-                    o1.getPageNumber() == o2.getPageNumber()) {
-                return 0;
-            } else if (o1.getName().equals(o2.getName())){
-                return -1;
-            } else {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        TreeSet<Book> sortedBooks = new TreeSet<>(Comparator.comparing(Book::getName));
 
         // Add book to the set to perform sorting
         int numEl = books.size();

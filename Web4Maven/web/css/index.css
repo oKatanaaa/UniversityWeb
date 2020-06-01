@@ -1,0 +1,84 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #ebeeef;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
+
+.clearfix:after {
+  content: '';
+  display: table;
+  width: 100%;
+  clear: both;
+
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 670px;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.logo {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  margin-top: 100px;
+  background: url("../img/logo.jpg") no-repeat center top / cover;
+  height: 180px;
+}
+
+.logo_title {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  height: 180px;
+
+  font-weight: bold;
+  font-size: 40px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  padding-top: 65px;
+  background: rgba(54,84,99,0.7);
+}
+
+.form_container {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 350px;
+  display: block;
+  background:  #fff;
+  margin-bottom: 50px;
+}
+
+form {
+  padding-left: 90px;
+  padding-right: 90px;
+  padding-top: 60px;
+}
+
+.input_wrapper {
+  text-align: center;
+}
+
+.input_field div {
+  float: left;
+
+}
+
+input {
+  border: 0;
+  height: 25px;
+  width: 400px;
+  margin-left: 30px;
+}
+
+.input_name {
+  width: 50px;
+  height: 45px;
+  color: #777;
+}

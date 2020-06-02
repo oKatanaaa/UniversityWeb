@@ -20,4 +20,9 @@ public class CustomerEJB {
             return null;
         }
     }
+
+    public void deleteBook(String bookName) throws SQLException {
+        LibraryDB db = DBSingleton.getLibraryDB();
+        db.removeBook(bookName);
+    }
 }

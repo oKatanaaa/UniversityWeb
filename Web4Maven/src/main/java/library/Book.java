@@ -41,7 +41,7 @@ public class Book implements Serializable {
         st.nextToken(); // take off cost
         int cost = Integer.parseInt(st.nextToken());
 
-        return new Book(name, new GregorianCalendar(year, month, day), pageNumber, cost);
+        return new Book(name, month, pageNumber, cost);
     }
 
     public static boolean writeFile(String fileName, Book book) {
@@ -67,13 +67,13 @@ public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private GregorianCalendar date;
+    private int date;
     private int pageNumber;
     private int cost;
 
     public Book() {};
 
-    public Book(String name, GregorianCalendar date, int pageNumber, int cost) {
+    public Book(String name, int date, int pageNumber, int cost) {
         if (pageNumber <= 0) {
             throw new IllegalArgumentException("Number of pages must be greater zero.");
         }
@@ -95,10 +95,10 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public GregorianCalendar getDate() {
+    public int getDate() {
         return date;
     }
-    public void setDate(GregorianCalendar date) {
+    public void setDate(int date) {
         this.date = date;
     }
 
@@ -126,11 +126,7 @@ public class Book implements Serializable {
     public String toString() {
         return "library.Book{" +
                 "name=" + name +
-
-                "|date=(" + date.get(Calendar.YEAR)+ ","
-                + date.get(Calendar.MONTH) + ","
-                + date.get(Calendar.DAY_OF_MONTH) + ")" +
-
+                "|date=" + date +
                 "|pageNumber=" + pageNumber +
                 "|cost=" + cost +
                 "}";

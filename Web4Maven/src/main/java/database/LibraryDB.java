@@ -165,7 +165,7 @@ public class LibraryDB {
         String name = book.getName();
         // Only year is needed.
         // P.S. I overcomplicated the task but realized it only now.
-        int year = book.getDate().get(Calendar.YEAR);
+        int year = book.getDate();
         int n_pages = book.getPageNumber();
         int cost = book.getCost();
 
@@ -265,8 +265,7 @@ public class LibraryDB {
         int year = set.getInt("YEAR");
         int npages = set.getInt("N_PAGES");
         int cost = set.getInt("COST");
-        GregorianCalendar date = new GregorianCalendar(year, Calendar.JANUARY, 1);
-        return new Book(name, date, npages, cost);
+        return new Book(name, year, npages, cost);
     }
 
     public boolean removeBook(String name) throws SQLException {

@@ -6,10 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -25,12 +22,16 @@ public class CustomerBean {
     private final String MSG_USER_FOUND = "found";
     private final String MSG_SQL_ERROR = "sqlerror";
 
+    private final String LBL_LOGIN = "ВХОД";
+    private final String LBL_NOTFOUND = "ПОЛЬЗОВАТЕЛЬ НЕ НАЙДЕН";
+
     @EJB
     private final CustomerEJB customerEJB;
     private Reader reader;
     private String login;
     private String password;
-    private String message = MSG_SQL_ERROR;
+
+    private String topLabel = LBL_LOGIN;
 
     public CustomerBean() {
         this.customerEJB = new CustomerEJB();
@@ -60,29 +61,31 @@ public class CustomerBean {
         this.reader = reader;
     }
 
+    public String getTopLabel() {
+        return topLabel;
+    }
+
+    public void setTopLabel(String topLabel) {
+        this.topLabel = topLabel;
+    }
+
 
     public String validateUserLogin() {
         try {
             reader = customerEJB.validateUserLogin(login, password);
 
             if (reader == null) {
-                return message = MSG_USER_NOT_FOUND;
+                topLabel = LBL_NOTFOUND;
+                return MSG_USER_NOT_FOUND;
             }
             else {
-                return message = MSG_USER_FOUND;
+                topLabel = LBL_LOGIN;
+                return MSG_USER_FOUND;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return message = MSG_SQL_ERROR;
+            return MSG_SQL_ERROR;
         }
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public void downloadXML() {
@@ -128,6 +131,7 @@ public class CustomerBean {
     public void updateReader() throws SQLException {
         reader = customerEJB.validateUserLogin(login, password);
     }
+
 
 
 }

@@ -9,7 +9,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -17,11 +16,15 @@ import java.sql.SQLException;
 @SessionScoped
 public class ShelfBookBean {
     private ShelfBookEJB shelfBookEJB = new ShelfBookEJB();
-    private String author = "hui";
+    private String author = "";
     private String bookName;
-    private int date;
-    private int pageNumber;
-    private int cost;
+    private Integer date;
+    private Integer pageNumber;
+    private Integer cost;
+
+    public ShelfBookBean() {
+        update();
+    }
 
     public String getAuthor() {
         return author;
@@ -39,27 +42,34 @@ public class ShelfBookBean {
         this.bookName = bookName;
     }
 
-    public int getDate() {
+    public Integer getDate() {
+        if (date < 0)
+            return null;
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 
-    public int getPageNumber() {
+    public Integer getPageNumber() {
+        if (pageNumber < 0)
+            return null;
+
         return pageNumber;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public int getCost() {
+    public Integer getCost() {
+        if (cost < 0)
+            return null;
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 
@@ -109,8 +119,14 @@ public class ShelfBookBean {
                 FacesMessage facesMessage = new FacesMessage("Имя должно быть непустым.");
                 throw new ValidatorException(facesMessage);
             }
-        } catch (ValidatorException e) {
+            if (shelfBookEJB.checkBookExists(toValidate)) {
+                FacesMessage facesMessage = new FacesMessage("Такая книга уже существует.");
+                throw new ValidatorException(facesMessage);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+            FacesMessage facesMessage = new FacesMessage("Ошибка запроса.");
+            throw new ValidatorException(facesMessage);
         }
     }
 
@@ -133,11 +149,21 @@ public class ShelfBookBean {
         try {
             shelfBookEJB.addBook(book, author);
             bean.updateReader();
+            update();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return "error";
         }
         return "success";
+    }
+
+    private void update() {
+        author = "";
+        bookName = "";
+        date = -1;
+        cost = -1;
+        pageNumber = -1;
     }
 
 }
